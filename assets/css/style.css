@@ -1,0 +1,146 @@
+#quiz-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#quiz-container .btn {
+    cursor: pointer;
+    line-height: 36px;
+    height: 40px;
+    border: 1px solid #c3c3c3;
+    background-color: transparent;
+    border-radius: 5px;
+    display: inline-block;
+    padding: 0 10px;
+}
+
+#quiz-container .btn:hover {
+    border-color: #111;
+}
+
+#quiz-container  .btn-quiz {
+    color: #fff;
+    background: #62AFE0;
+    width: 100%;
+    border-color: transparent;
+    border-radius: 5px;    
+    font-size: 24px;
+    font-weight: 400;
+    text-transform: uppercase;    
+    text-decoration: none;
+    margin-top: 10px;  
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#quiz-container  .btn-quiz:hover {
+    border-color: transparent;
+}
+
+.quiz-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#quiz-container .m-text-center {
+    text-align: center;
+}
+
+.question-answer {
+    margin-bottom: 15px;    
+    border-radius: 5px;
+    background: #ccc;
+}
+
+.question-answer:hover,
+.question-answer.active {
+    background: #62AFE0;
+    color: #fff;
+}
+
+.answer-label {
+    display: block;
+    position: relative;       
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    min-height: 25px;
+    padding-left: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+ 
+  .answer-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    height: 25px;
+    width: 25px;    
+    transform: translate(0, -50%);
+    border-radius: 5px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .answer-label:hover input ~ .checkmark {    
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .answer-label input:checked ~ .checkmark {
+    
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .answer-label input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .answer-label .checkmark:after {
+    left: 8px;
+    top: 3px;
+    width: 10px;
+    height: 15px;
+    border: solid white;
+    border-width: 0px 5px 5px 0px;
+    /* -webkit-transform: rotate(45deg); */
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+#quiz-container .form-group {
+    margin-bottom: 15px;        
+}
+
+#quiz-container .result-wrapper .result-header {
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+#quiz-container .result-wrapper .result-content .score{
+    text-align: center;
+    font-size: 24px;
+    margin: 15px auto;
+}

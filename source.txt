@@ -1,0 +1,17 @@
+$google_api_url = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCAHXAMhfSjtL-CCGH0P58KPLPLJAwgdGA';
+						                               $response_font_api = wp_remote_retrieve_body( wp_remote_get($google_api_url, array('sslverify' => false )));
+						                               if(!is_wp_error( $response_font_api ) ) {
+						                                    $fonts_list = json_decode($response_font_api,  true);
+						                                    // that's it
+						                                    
+						                                        if(isset($fonts_list['items'])){
+							                                        $g_fonts = $fonts_list['items'];
+							                                        foreach( $g_fonts as $g_font) { $font_name = $g_font['family']; ?>
+							                                            <option value="<?php echo esc_attr($font_name); ?>" <?php selected($theme_font, $font_name ); ?>><?php echo esc_attr($font_name); ?></option><?php 
+							                                        }
+																
+						                                    } else {
+						                                        echo "<option disabled>".esc_html__("Error to fetch Google fonts.", 'NLS_TEXT_DOMAIN')."</option>";
+						                                        echo "<option disabled>".esc_html__("Google font will not available in offline mode.", 'NLS_TEXT_DOMAIN')."</option>";
+						                                    }
+						                                } 

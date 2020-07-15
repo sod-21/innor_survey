@@ -157,6 +157,38 @@ class MQA_Plugin {
 		register_setting( 'mqz_settings', 'mqz', array( $this, 'save_general_settings' ) );
 		register_setting( 'mqz_maillite_settings', 'mqz', array( $this, 'save_mailite_settings' ) );
 		register_setting( 'mqz_social_settings', 'mqz', array( $this, 'save_social_settings'));
+		register_setting ("mqz_import_file", "mqz", array( $this, 'save_quiz_file')); 
+	}
+
+	public function save_quiz_file($settings) {
+		
+		if(!empty($_FILES["mqz_import_file"]["tmp_name"])) {
+			$content = file_get_contents($_FILES['mqz_import_file']['tmp_name']);
+			$content = trim($content);
+			
+			if ($content) {
+				try {
+					$data =  base64_decode($content);
+					$data = json_decode($data, true);
+
+					if (is_array($data) && MQZ_QUIZ::import_quiz($data)) {
+
+					}
+				}
+
+				catch (Exception $e) {
+				
+				}
+				
+			}
+			
+		}
+
+		return $settings;
+	}
+
+	public function show_import_issue() {
+		printf('<div class="notice notice-import"><p>Import Failed</p></div>');
 	}
 
 	private function add_hooks() {
@@ -165,6 +197,8 @@ class MQA_Plugin {
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 		add_action( 'init', array( $this, 'register_quiz_post_types' ) );
 		add_action( 'init', array( $this, 'rewrite_rules' ), 9999 );
+		add_action( 'init', array( $this, 'mqz_export_data'), -999);
+
 		add_action( 'load-post-new.php', array($this, 'plugin_load_page_template' ) );
 		add_action( 'load-post.php', array($this, 'plugin_load_page_template' ) );
 		add_shortcode( 'innovere-survey', array('Quiz_Shortcode', 'output'));
@@ -177,6 +211,33 @@ class MQA_Plugin {
 		add_action('wp_ajax_nopriv_mqz_file_upload', array($this, 'mqz_file_upload'));
 
 		add_action( 'admin_enqueue_scripts', array ($this, 'mqz_admin_enque_scripts'));
+	}
+
+	public function mqz_export_data() {
+		if (isset($_POST["mqz-export-id"]) && $_POST["mqz-export-id"]) {
+			
+			$quiz = MQZ_QUIZ::load_quiz( $_POST["mqz-export-id"] );
+
+			if ($quiz) {
+
+				$id = $_POST["mqz-export-id"];
+
+				$res = json_encode($quiz);
+				$res =  base64_encode($res);
+
+				$filename = "$id.txt";
+	            header("Pragma: public");
+	            header("Expires: 0");
+	            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+	            header("Content-Type: application/octet-stream");
+	            header("Content-Disposition: attachment; filename=$filename");
+	            header("Content-Transfer-Encoding: binary");
+	            header("Content-Length: ". strlen($res));
+				
+				echo $res;
+				exit;
+			}
+		}
 	}
 
 	public function mqz_admin_enque_scripts() {

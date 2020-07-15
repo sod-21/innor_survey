@@ -7,16 +7,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 function mqz_import_page() {
 ?>
     <div class="wrap">
-    	<h2><?php echo __( 'Import', 'mqz' ); ?></h2>
+    	<h2><?php echo __( 'Export / Import Survey', 'mqz' ); ?></h2>
     	<div class="mqz-import-section">
     		<div class="mqz-row">
 
 	    		<div class="mqz-row-title">
-	    			Import Quiz Data:
+	    			Import:
 	    		</div>
 	    		<div class="mqz-form">
 	    			<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" enctype="multipart/form-data"
 		    			>
+		    			<?php settings_fields( 'mqz_import_file' ); ?>
+
 		    			<input type="file" name="mqz_import_file" id="mqz_import_file" />
 
 		    			<?php submit_button("Import"); ?>
@@ -28,15 +30,22 @@ function mqz_import_page() {
     		<div class="mqz-row">
 
 	    		<div class="mqz-row-title">
-	    			Export Quiz Data:
+	    			Export:
 	    		</div>
 	    		<div class="mqz-form">
-	    			<form action="<?php echo admin_url( 'options.php' ); ?>" method="post" enctype="multipart/form-data"
-		    			>
-		    			<select class="mqz-quiz-select">
-		    					
+	    			<form method="post">
+		    			<?php 
+		    			$quiz = MQZ_Helpers::get_quizzes();
+		    			if (count($quiz) > 0):
+		    			?>
+		    			<select class="mqz-quiz-select" name="mqz-export-id">
+		    				<?php  foreach ($quiz as $q):?>
+		    					<option value="<?php echo $q->quiz_id; ?>"><?php echo $q->quiz_name; ?></option>
+		    				<?php endforeach; ?>
 		    			</select>
-
+		    			<?php else: ?>
+		    			<p>No Quiz Data.</p>
+		    			<?php endif; ?>
 		    			<?php submit_button("Export"); ?>
 		    		</form>
 	    		</div>

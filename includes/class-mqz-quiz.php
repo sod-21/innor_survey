@@ -21,6 +21,7 @@ class MQZ_QUIZ {
 	 */
 
 	public static function load_quiz( $quiz_id ) {
+
 		global $wpdb;
 		$quiz_id = intval( $quiz_id );
 		$quiz = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}innovere_survey WHERE quiz_id = %d LIMIT 1", $quiz_id ), 'ARRAY_A' );
@@ -33,6 +34,48 @@ class MQZ_QUIZ {
 			}
 
 			return $quiz_data;
+		}
+
+		return false;
+	}
+
+	public static function import_quiz ($data) {
+		global $wpdb;
+
+		$quiz_id = wp_insert_post(array (
+			'post_type' => 'quiz',				
+			'post_title' => wp_strip_all_tags($data["quiz"]),
+			'post_content' => "[innovere-survey]",
+			'post_status' => 'publish',				
+		));
+
+		if ($quiz_id) {
+
+			$slug = get_post_field('post_name', $quiz_id);
+			
+			$values = array(			
+			'quiz_id' => $quiz_id,
+			'quiz_name'			=> $data["quiz"],
+			'quiz_data'			=> '',
+			);
+
+			$types = array(
+				'%d',			
+				'%s',
+				'%s',
+			);
+
+			$data["options"]["slug"] = $slug;
+			$string = maybe_serialize($new_data);
+			$values["quiz_data"] = $string;
+
+			$results = $wpdb->insert(
+				$wpdb->prefix . 'innovere_survey',
+				$values,
+				$types
+			);
+
+			return true;
 		}
 
 		return false;

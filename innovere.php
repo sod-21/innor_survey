@@ -44,6 +44,7 @@ class MQA_Plugin {
 
 		require_once 'admin/quiz-page.php';
 		require_once 'admin/mqz-settings.php';
+		require_once 'admin/import.php';
 
 		require_once 'includes/class-mqz-quiz.php';			
 		require_once 'includes/rest-api.php';
@@ -348,6 +349,8 @@ class MQA_Plugin {
 			add_menu_page( 'Innovere Surveys', __( 'Innovere Surveys', 'mqz' ), 'moderate_comments', __FILE__, 'quiz_manage_page', 'dashicons-feedback' );
 			add_submenu_page( NULL, __( 'Settings', 'mqz' ), __( 'Settings', 'mqz' ), 'moderate_comments', 'quiz_manage_page' );			
 			add_submenu_page( __FILE__, __( 'Settings', 'mqz' ), __( 'Settings', 'mqz' ), 'manage_options', 'mqz_options', 'mqz_settings_page'  );
+
+			add_submenu_page( __FILE__, __( 'Export / Import', 'mqz' ), __( 'Export / Import', 'mqz' ), 'manage_options', 'mqz_import', 'mqz_import_page'  );
 
 			// global $menu;
 			// var_dump ($menu);

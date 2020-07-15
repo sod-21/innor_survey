@@ -186,3 +186,20 @@
     will-change: transform;
   }
   
+  .mqz-import-section .mqz-row {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+    margin-bottom: 30px;
+  }
+
+  .mqz-import-section .mqz-row .mqz-row-title {
+    min-width: 200px ;
+    margin-left: 30px;
+    font-size: 18px;
+  }
+
+  .mqz-import-section .mqz-row .mqz-form {
+    padding: 15px 0;
+  }

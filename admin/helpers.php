@@ -30,7 +30,7 @@ class MQZ_Helpers {
 		return True;
 	}
 
-	public function get_quizzes( $include_deleted = false, $order_by = 'quiz_id', $order = 'DESC' ) {
+	public static function get_quizzes( $include_deleted = false, $order_by = 'quiz_id', $order = 'DESC' ) {
 		global $wpdb;
 
 		// Set order direction

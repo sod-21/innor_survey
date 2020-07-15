@@ -279,10 +279,10 @@ class PreviewPanel extends Component {
                     let is_redirect = true;
 
                     conditions.map((val) => {
-                        var cond = false;
+                        let cond = false;
                         if (val.target == "Score") {
                             
-
+                            cond = false;
                             const _min = parseInt(val.val[0]);
                             switch (val.condition) {
                                 case "=":
@@ -310,6 +310,7 @@ class PreviewPanel extends Component {
 
                         } else {
                             //window.location.replace(val.redirect);
+                            
                             const val1 = val.val[0];
                             const question = this.props.questions[val.target - 1];
                             let context = "";
@@ -364,7 +365,7 @@ class PreviewPanel extends Component {
                         }
                     });
 
-                    if (is_redirect) {
+                    if (is_redirect && conditions[0].redirect) {
                         window.location.replace(conditions[0].redirect);
                     }
                 }

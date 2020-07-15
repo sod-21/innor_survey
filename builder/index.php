@@ -49,7 +49,7 @@
 ?>
   <script type="text/javascript">
 	window.quiz_url = "<?php echo site_url('wp-json/magic-quiz/v1/'); ?>";
-  window.redirect_page = "<?php echo admin_url('admin.php?page=innovere-survey%2Fmagicquiz.php'); ?>";
+  window.redirect_page = "<?php echo admin_url('admin.php?page=innovere-survey%2Finnovere.php'); ?>";
   window.img = "<?php echo MQA_PLUGIN_URL . "assets/img/"; ?>";
 	<?php
   $id = isset($_GET["id"]) ? $_GET["id"] : 0;

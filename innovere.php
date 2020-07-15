@@ -185,10 +185,7 @@ class MQA_Plugin {
 		wp_enqueue_script( 'admin-quiz.js', MQA_PLUGIN_URL . 'admin/js/script.js', array( 'jquery'), '1.0', true );
 	}
 
-	// public function add_enque_scripts() {
-	// 	wp_enqueue_script( 'quiz.js', MQA_PLUGIN_URL . 'assets/js/quiz.js', array( 'jquery', 'underscore', 'wp-util' ), $this->version, true );
-	// 	wp_enqueue_style( 'quiz.css', MQA_PLUGIN_URL . 'assets/css/style.css', null, '1.0');
-	// }
+	
 
 	public function rewrite_rules() {
 		if (is_admin()) {

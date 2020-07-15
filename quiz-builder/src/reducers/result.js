@@ -14,6 +14,9 @@ export default function reducer(state = {
     ]
 }, action) {
     if (action.type == READ_RESULT) {
+        if (typeof action.payload == "undefined")
+            return state;
+        
         if (action.payload)
             state = action.payload;
 

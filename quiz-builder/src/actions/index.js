@@ -40,21 +40,29 @@ export const readPost = () => {
         if (quiz_id > 0) {
             axios.get(`${apiUrl}quiz/${quiz_id}`).then(
                 res => {
-                    // console.log(res.data);
-                    const data = res.data;
+                    if (res.data) {
+                        const data = res.data;
+                        const mails = data.mails ? data.mails : [];
+                        const settings = data.settings ? data.settings: "";
+                        const questions = data.questions ? data.questions : [];
+                        const options = data.options ? data.options : {slug: ""};
 
-                    const mails = data.mails ? data.mails : [];
-                    const settings = data.settings ? data.settings: "";
-                    const questions = data.questions ? data.questions : [];
-                    const options = data.options ? data.options : {slug: ""};
-
-                    dispatch(dispatchQuiz(data.quiz));
-                    dispatch(dispatchQuestion(data.questions));                                     
-                    dispatch(dispatchReadResult(data.result));
-                    dispatch(dispatchMatchedField(mails));
-                    dispatch(dispatchSettings(settings));
-                    dispatch(dispatchDisableLoading());
-                    dispatch(dispatchOptions(options));
+                        dispatch(dispatchQuiz(data.quiz));
+                        dispatch(dispatchQuestion(data.questions));                                     
+                        dispatch(dispatchReadResult(data.result));
+                        dispatch(dispatchMatchedField(mails));
+                        dispatch(dispatchSettings(settings));
+                        dispatch(dispatchDisableLoading());
+                        dispatch(dispatchOptions(options));    
+                    } else {
+                        dispatch(dispatchQuiz());
+                        dispatch(dispatchQuestion());
+                        dispatch(dispatchReadResult());
+                        dispatch(dispatchMatchedField([]));
+                        dispatch(dispatchSettings(""));
+                        dispatch(dispatchDisableLoading());
+                        dispatch(dispatchOptions({slug: ""}));    
+                    }                    
                 }
             ).catch(error => {
                 throw(error);

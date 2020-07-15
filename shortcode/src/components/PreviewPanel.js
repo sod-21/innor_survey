@@ -311,7 +311,17 @@ class PreviewPanel extends Component {
                         } else {
                             //window.location.replace(val.redirect);
                             const val1 = val.val[0];
-                            const context = this.props.questions[val.target - 1].text;
+                            const question = this.props.questions[val.target - 1];
+                            let context = "";
+                            if (question.type == "MC") {
+                                question.answers.map((val) => {
+                                    if (val.checked) {
+                                        context += val.title + "\n";
+                                    }
+                                });
+                            } else {
+                                context = question.text;
+                            }
 
                             switch (val.condition) {
                                 case "contains":

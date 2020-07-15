@@ -43,6 +43,9 @@ export default function reducer(state = initialState, action) {
         return state;
     } 
     if (action.type == QUIZ_EXECUTE_QUESTION) {
+        if (typeof action.payload == "undefined")
+            return state;
+        
         let newstate = [...action.payload];
         return newstate;
     } else if (action.type == ADD_NEW_QUESTION) {

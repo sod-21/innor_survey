@@ -125,6 +125,10 @@ class ConditionItem extends Component {
     super(props)
 
     let questions = this.props.questions.map((val) => {
+        if (val.type == "FB") {
+            return false;
+        }
+        
         return {
             value: val.id,
             label: (<div class="qr-option">{question_item(val.type)} <ContentEditable            

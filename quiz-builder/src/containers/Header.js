@@ -68,7 +68,8 @@ export class Controller extends Component {
             result: this.props.result,
             mails: this.props.mailer.mails, 
             settings: this.props.settings,
-            options: this.props.options,     
+            options: this.props.options, 
+            rule: this.props.rule,    
         }
 
         this.props.savePost(data);
@@ -130,7 +131,8 @@ export const mapStateToProps = store => {
     result: store.result,
     mailer: store.mailer,
     settings: store.settings,
-    options: store.options
+    options: store.options,
+    rule: store.rule,
   };
 };
 

@@ -11,13 +11,14 @@ class SettingOption extends Component {
             "Fonts",
             "Paragraph",
             "Colors",
-            "Background"
+            "Progress Bar"
         ]
     }
   };
 
   onChange(e) {
-    
+    if (e == "Progress Bar")
+      e = "Background";
     this.props.change(e);    
   }
   

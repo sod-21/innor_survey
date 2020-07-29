@@ -77,33 +77,7 @@ class NewQuestion extends PureComponent {
 
                 if (question.type != selvalue.value) {
                     question = Get_Question_Model(selvalue.value);
-                    // switch (selvalue.value) {
-                    //     case "MC":
-                    //         question = Object.assign({}, MC_MODEL);
-                    //         break;
-                    //     case "FB":
-                    //         question = Object.assign({}, FB_MODEL);
-                    //         break;
-                    //     case "TX":
-                    //         question = Object.assign({}, TX_MODEL);
-                    //         break;
-                    //     case "RT":
-                    //         question = Object.assign({}, RT_MODEL);
-                    //         break;
-                    //     case "PH":
-                    //         question = Object.assign({}, PH_MODEL);
-                    //         break;
-                    //     case "EM":
-                    //         question = Object.assign({}, EM_MODEL);
-                    //         break;
-                    //     case "WS":
-                    //         question = Object.assign({}, WS_MODEL);
-                    //         break;
-                    //     case "YN":
-                    //         question = Object.assign({}, YN_MODEL);
-                    //         break;
-                    // }
-
+                    
                     question.id = this.props.question.id;
                     question.title = this.props.question.title;
                     question.description = this.props.question.description;
@@ -211,7 +185,8 @@ class NewQuestion extends PureComponent {
         
         const activate = this.props.activate;
         const is_des = this.state.is_des;
-        
+        const nodes = this.props.question.description ? true: false;
+
         if (this.props.question.type == "MC") {
             Qcontent = (
                 <MC_Question question={this.props.question} activate={this.props.activate} addQuestion={this.props.addquestion} changeQuestion={this.props.changeQuestion }></MC_Question>
@@ -328,16 +303,16 @@ class NewQuestion extends PureComponent {
                         <div class="q-section">
                             <span className={"q-id in-icon in-icon" + this.props.question.type }>{this.state.id}</span>
                             <div class="q-title">
-                                <EditBox text={this.state.title} className="q-control" change={(e) => {this.changeTitle(e);}}/>
+                                <EditBox text={this.state.title} placeholder={"Question Title"} className="q-control" change={(e) => {this.changeTitle(e);}}/>
                                 {/* { <input type="text" class="q-control" value={this.state.title} placeholder="Question Title" onChange={(e)=> {this.changeTitle(e);}} />} */}
                             </div>    
                         </div>
                     </div>
 
-
+                    
                     <div class="q-section">                       
                         <div class="q-description">
-                            <EditBox text={this.state.description} className="q-control" change={(e) => {this.changeDescription(e);}}/>
+                            <EditBox text={this.state.description} placeholder={"Description of Question"} className="q-control" change={(e) => {this.changeDescription(e);}}/>
                         </div>
                     </div>
                 </Fragment>

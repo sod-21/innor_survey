@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import YNOption from "./YNOption";
 
 const titles = [
-    "ProgressBar: <small>Percentage</small>",
+    "Toggle ProgressBar",
 ];
 
 class BGOptions extends Component {

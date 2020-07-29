@@ -3,6 +3,7 @@ import {QUIZ_EXECUTE_QUESTION, QUIZ_EXECUTE_QUIZ, QUIZ_LOADING, READ_MAILER_FIEL
 import {READ_RESULT } from "../constants/result";
 import { CHANGE_FONT, RESTORE_STYLE, READ_SETTINGS, CHANGE_COLOR, CHANGE_PARAGRAPH, CHANGE_BACKGROUND  } from "../constants/styles";
 import {CHANGE_OPTIONS} from "../constants/Index";
+import {READ_RULE} from "../constants/rule";
 
 const apiUrl = window.quiz_url;
 const quiz_id = window.quiz_id;
@@ -46,6 +47,7 @@ export const readPost = () => {
                         const settings = data.settings ? data.settings: "";
                         const questions = data.questions ? data.questions : [];
                         const options = data.options ? data.options : {slug: ""};
+                        const rule = data.rule ? data.rule: "";
 
                         dispatch(dispatchQuiz(data.quiz));
                         dispatch(dispatchQuestion(data.questions));                                     
@@ -54,6 +56,7 @@ export const readPost = () => {
                         dispatch(dispatchSettings(settings));
                         dispatch(dispatchDisableLoading());
                         dispatch(dispatchOptions(options));    
+                        dispatch(dispatchRule(rule));
                     } else {
                         dispatch(dispatchQuiz());
                         dispatch(dispatchQuestion());
@@ -62,6 +65,7 @@ export const readPost = () => {
                         dispatch(dispatchSettings(""));
                         dispatch(dispatchDisableLoading());
                         dispatch(dispatchOptions({slug: ""}));    
+                        dispatch(dispatchRule(""));
                     }                    
                 }
             ).catch(error => {
@@ -226,6 +230,13 @@ export function dispatchBackground(e) {
 export function dispatchChangeRemember(e) {
     return {
         type: CHANGE_REMEMBER,
+        payload: e
+    }
+}
+
+export function dispatchRule(e) {
+    return {
+        type: READ_RULE,
         payload: e
     }
 }

@@ -32,7 +32,7 @@ class MC_Question extends PureComponent {
 
     changeTitle(e, index) {
         let q = this.props.question;
-        q.answers[index].title = e;
+        q.answers[index].title = e.target.value;
 
         this.setState({
             question: q
@@ -77,6 +77,24 @@ class MC_Question extends PureComponent {
         );
     }
 
+    removeAnswer(e) {
+        if (e >= 0) {
+            let q = this.props.question;
+
+            q.answers = [
+                ...q.answers.slice(0, e),
+                ...q.answers.slice(e + 1)
+            ];
+            this.setState({
+                question: q
+            });
+
+            this.props.changeQuestion(           
+                q
+            );    
+        }        
+    }
+
     addAnswerImage(e) {
         let self = this;
         let point = e;
@@ -116,12 +134,15 @@ class MC_Question extends PureComponent {
         const is_scored = is_edit && this.props.question.scored_question;
         
         //console.log(this.state.question.answers);
-        let answers = this.state.question.answers.map((val, index) => (
-            <div class="q-section" key={`q-answer-${val}-${index}`} index={index}>
+        let answers = this.props.question.answers.map((val, index) => (
+            <div class="q-section" index={val}>
                 <div class="q-icon">
                     { is_edit &&
-                    (<div class="q-sharp">
-                    </div>)
+                    (
+                        <div class="q-mc-delete" onClick={(e) => {this.removeAnswer(index); }}>
+                            <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.36552 0H11.8198C12.8239 0 13.6379 0.813984 13.6379 1.81808V2.72646H16.3628C17.3669 2.72646 18.1808 3.54045 18.1808 4.54455V6.36263C18.1808 7.36673 17.3669 8.18072 16.3628 8.18072H16.2894L15.4531 18.182C15.4531 19.1861 14.6391 20.0001 13.635 20.0001H4.54457C3.54047 20.0001 2.72648 19.1861 2.72962 18.2575L1.88989 8.18072H1.81808C0.813984 8.18072 0 7.36673 0 6.36263V4.54455C0 3.54045 0.813984 2.72646 1.81808 2.72646H4.54743V1.81808C4.54743 0.813984 5.36142 0 6.36552 0ZM4.54743 4.54521V4.54456H1.82065V6.36264H16.3653V4.54456H13.6379V4.54521H4.54743ZM4.54442 18.1802L3.714 8.18072H14.465L13.638 18.1047L13.6348 18.1802H4.54442ZM11.8171 1.81931V2.72835H6.36285V1.81931H11.8171ZM5.72146 10.6423L7.00704 9.35675L9.09138 11.4411L11.1757 9.35675L12.4613 10.6423L10.377 12.7267L12.4613 14.811L11.1757 16.0966L9.09138 14.0122L7.00704 16.0966L5.72146 14.811L7.8058 12.7267L5.72146 10.6423Z" fill="#DADADA"></path></svg>
+                        </div>
+                    )
                     }
                 </div>
 
@@ -135,7 +156,7 @@ class MC_Question extends PureComponent {
                     </span>)
                     }
                     <span class="q-a-title">
-                        <EditBox text={val.title} key={`q-a-title-${index}`} className="q-control" change={(e) => {this.changeTitle(e, index);}}/>
+                        <input value={val.title} type="text"  className="q-control q-rich-editor" onChange={(e) => {this.changeTitle(e, index);}} />                       
                     </span>
                     {is_scored ?
                         (<span class="scored">

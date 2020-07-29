@@ -10,5 +10,6 @@ import settings from "./settings";
 import help from "./help";
 import options from "./options";
 import quill from "./quill";
+import rule from "./rule";
 
-export default combineReducers({ loading, activate, quiz, questions, result, mailer, settings, help, options, quill });
+export default combineReducers({ loading, activate, quiz, questions, result, mailer, settings, help, options, quill, rule });

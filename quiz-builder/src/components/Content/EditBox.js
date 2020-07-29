@@ -34,7 +34,7 @@ class EditBox extends Component {
               disabled={false}       // use true to disable editing
               onChange={this.handleChange} // handle innerHTML change
               tagName='article' // Use a custom HTML tag (uses a div by default)
-              
+              data-placeholder={this.props.placeholder}
             />
   };
 };
@@ -43,5 +43,6 @@ EditBox.propTypes = {
     text: PropTypes.string,
     change: PropTypes.func,
     className: PropTypes.string,
+    placeholder: PropTypes.string,
 }
 export default EditBox;

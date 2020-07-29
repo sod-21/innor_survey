@@ -11,6 +11,7 @@ import RD_Settings from "./Content/RD_Settings";
 import NewQuestion from "./Content/NewQuestion";
 import QPopup from "./Content/QPopup";
 import HF_Settings from "./Content/HF_Settings";
+import RTooltip from "./Content/RTooltip";
 
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from "../module/sortable/index";
 import EM_Settings from "./Content/EM_Settings";
@@ -291,24 +292,32 @@ class QuestionsPanel extends Component {
                             <NewQuestion question={q} key={q.id} addQuestion={false} changeQuestion={this.props.changeQuestion }></NewQuestion>
                             { (q.type != "") ? (
                             <div class="operate-panel">
+                                <RTooltip message={"Delete"} position={(index  > 0) ? "top" : "bottom"}>
                                 <a class="q-op-btn" onClick={(e) => {this.deleteQuestion(q, e)}}><svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M6.36552 0H11.8198C12.8239 0 13.6379 0.813984 13.6379 1.81808V2.72646H16.3628C17.3669 2.72646 18.1808 3.54045 18.1808 4.54455V6.36263C18.1808 7.36673 17.3669 8.18072 16.3628 8.18072H16.2894L15.4531 18.182C15.4531 19.1861 14.6391 20.0001 13.635 20.0001H4.54457C3.54047 20.0001 2.72648 19.1861 2.72962 18.2575L1.88989 8.18072H1.81808C0.813984 8.18072 0 7.36673 0 6.36263V4.54455C0 3.54045 0.813984 2.72646 1.81808 2.72646H4.54743V1.81808C4.54743 0.813984 5.36142 0 6.36552 0ZM4.54743 4.54521V4.54456H1.82065V6.36264H16.3653V4.54456H13.6379V4.54521H4.54743ZM4.54442 18.1802L3.714 8.18072H14.465L13.638 18.1047L13.6348 18.1802H4.54442ZM11.8171 1.81931V2.72835H6.36285V1.81931H11.8171ZM5.72146 10.6423L7.00704 9.35675L9.09138 11.4411L11.1757 9.35675L12.4613 10.6423L10.377 12.7267L12.4613 14.811L11.1757 16.0966L9.09138 14.0122L7.00704 16.0966L5.72146 14.811L7.8058 12.7267L5.72146 10.6423Z" fill="#DADADA"/>
                                 </svg>
                                 </a>
+                                </RTooltip>
 
+                                <RTooltip message={"Duplicate"} position={(index  > 0) ? "top" : "bottom"}>
                                 <a class="q-op-btn" onClick={(e) => {this.props.duplicateQuestion(q)}}><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.83337 18.3333C1.83337 19.3417 2.65837 20.1667 3.66671 20.1667H16.5V18.3333H3.66671V5.5H1.83337V18.3333Z" fill="#DADADA"/>
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M7.33321 1.8335H18.3332C19.3415 1.8335 20.1665 2.6585 20.1665 3.66683V14.6668C20.1665 15.6752 19.3415 16.5002 18.3332 16.5002H7.33321C6.32488 16.5002 5.49988 15.6752 5.49988 14.6668V3.66683C5.49988 2.6585 6.32488 1.8335 7.33321 1.8335ZM7.33318 14.6669H18.3332V3.66686H7.33318V14.6669Z" fill="#DADADA"/>
                         <path d="M11.9167 13.7502H13.75V10.0835H17.4167V8.25016H13.75V4.5835H11.9167V8.25016H8.25V10.0835H11.9167V13.7502Z" fill="#DADADA"/>
                         </svg>
                                 </a>
+                                </RTooltip>
 
+                                <RTooltip message={"Edit"} position={(index  > 0) ? "top" : "bottom"}>
                                 <a class="q-op-btn" onClick={(e) => {this.editQuestion(q)}}>
                                 <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M15.7524 1.9165C16.3799 1.9165 16.9814 2.16703 17.4206 2.60978L20.3923 5.58148C20.8348 6.02392 21.0833 6.624 21.0833 7.24971C21.0833 7.87541 20.8348 8.47549 20.3923 8.91793L9.54257 19.7643C8.87319 20.5364 7.92432 21.0108 6.83728 21.0854H1.91663V20.1271L1.91974 16.0877C2.00138 15.0771 2.47118 14.1375 3.18785 13.506L14.083 2.61094C14.5248 2.16647 15.1257 1.9165 15.7524 1.9165ZM6.76961 19.1711C7.28157 19.1349 7.75813 18.8966 8.1408 18.4589L15.3877 11.212L11.7898 7.61391L4.50039 14.9015C4.11212 15.2449 3.87192 15.7254 3.83329 16.1648V19.1693L6.76961 19.1711ZM13.1452 6.25879L16.743 9.85671L19.0371 7.56264C19.12 7.47965 19.1667 7.36708 19.1667 7.2497C19.1667 7.13233 19.12 7.01976 19.0371 6.93677L16.0627 3.96241C15.9806 3.87969 15.8689 3.83317 15.7524 3.83317C15.6359 3.83317 15.5242 3.87969 15.4421 3.96241L13.1452 6.25879Z" fill="#DADADA"/>
                                     </svg>
                                 </a>
-                                <DragHandle></DragHandle>
+                                </RTooltip>
+                                <RTooltip message={"Move"} position={(index  > 0) ? "top" : "bottom"}>
+                                    <DragHandle/>
+                                </RTooltip>                                
                             </div>
                             ): (<Fragment></Fragment>)
                             }

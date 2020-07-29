@@ -78,9 +78,15 @@ class RTooltip extends React.Component {
           {this.state.displayTooltip &&
           <div className={`tooltip-bubble tooltip-${position}`}>
             <div class="tooltip-wrapper">
-              <div class="tooltip-icon">
+              {
+                this.props.icon ? 
+                (<div class="tooltip-icon">
                 {get_icon(this.props.icon)}
-              </div>
+              </div>)
+              :
+              (<Fragment></Fragment>)
+              }
+              
               <ContentEditable
                 className={"tooltip-message"}
                 html={message}

@@ -99,15 +99,17 @@ const initialParagraph = [
 
 const initialBackground = [
     {// progress bar
-        option: false
+        option: true
     }
 ]
 
 export default function reducer(state = {
+    
     font: initialfonts,
     paragraph: initialParagraph,
     color: initialColors,
     background: initialBackground,
+
 }, action) {
     
     if (action.type == READ_SETTINGS) {

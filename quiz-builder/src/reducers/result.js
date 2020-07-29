@@ -40,23 +40,41 @@ export default function reducer(state = {
 
             return dstate;
         } else if (payload.type == "ADD") {
+
             let dstate = Object.assign({}, {
                 conditions: state.conditions
             });
 
-            dstate.conditions.push(
-                {
-                    "sum": "or",
-                    target: "Score",
-                    condition: "=",
-                    val: [
-                        0,0
-                    ],
-                    redirect: "",
-                }
-            );
+            if (dstate.conditions.length - 1 == payload.index) {
+                dstate.conditions.push(
+                    {
+                        "sum": "or",
+                        target: "Score",
+                        condition: "=",
+                        val: [
+                            0,0
+                        ],
+                        redirect: "",
+                    }
+                );
+            } else {
+                dstate.conditions = [
+                ...state.conditions.slice(0, payload.index),
+                 {
+                        "sum": "or",
+                        target: "Score",
+                        condition: "=",
+                        val: [
+                            0,0
+                        ],
+                        redirect: "",
+                    },
+                ...state.conditions.slice(payload.index)
+                ];
+            }            
 
             return dstate;
+
         } else if (payload.type == "CHANGE") {
             let index = payload.index;
             let dstate = Object.assign({}, {
@@ -68,6 +86,22 @@ export default function reducer(state = {
                 ...dstate.conditions.slice(0, index),
                 payload.result,
                 ...dstate.conditions.slice(index + 1)
+            ];
+
+            return dstate;
+        } else if (payload.type == "DELETE") {
+            
+            let index = payload.index;
+            let count = payload.count;
+
+            let dstate = Object.assign({}, {
+                conditions: state.conditions
+            });
+            
+            
+            dstate.conditions = [
+                ...dstate.conditions.slice(0, index),
+                ...dstate.conditions.slice(index + count)
             ];
 
             return dstate;

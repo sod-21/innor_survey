@@ -11,7 +11,7 @@ import RD from "./Preview/RD";
 import FU from "./Preview/FU";
 import ProgressBar from "./Preview/ProgressBar";
 import validator from "validator";
-import {RESULT} from "../constants/index";
+import {RESULT, RULES} from "../constants/index";
 import { CSSTransition, TransitionGroup  } from "react-transition-group";
 import RAlert from "./Preview/RAlert";
 import Mailer from "./Mailer";
@@ -131,6 +131,117 @@ class PreviewPanel extends Component {
         return next;
     }
 
+    calculateResult() {
+
+        let i = 0;
+        let prev_result = 0;
+        const conditions = RESULT.conditions;
+        let sum = this.onCalculate();
+
+        for (i = 0; i < RULES.length; i ++) {
+
+            let is_redirect = true;
+
+            for (let j = 0; j < RULES[i].count; j++) {
+                
+                const val = conditions[j + prev_result];
+        
+                let cond = false;
+                if (val.target == "Score") {
+                    
+                    cond = false;
+                    const _min = parseInt(val.val[0]);
+                    switch (val.condition) {
+                        case "=":
+                            if (sum == _min) {
+                                cond = true;
+                            }
+                            break;
+                        case "between":
+                            if (sum >= _min && sum <= parseInt(val.val[1])) {
+                                cond = true;
+                            }
+                            break;
+                        case ">":
+                            if (sum > _min) {
+                               cond = true;
+                            }
+                            break;
+                        case "<":
+                            if (sum < _min) {
+                                cond = true;
+                            }
+                            break;
+                    }
+
+
+                } else {
+                            //window.location.replace(val.redirect);
+                            
+                    const val1 = val.val[0];
+                    const question = this.props.questions[val.target - 1];
+                    let context = "";
+                    if (question.type == "MC") {
+                        question.answers.map((val) => {
+                            if (val.checked) {
+                                context += val.title + "\n";
+                            }
+                        });
+                    } else {
+                        context = question.text;
+                    }
+
+                    switch (val.condition) {
+                        case "contains":
+                            if (context.indexOf(val1) >= 0) {
+                                cond = true;
+                            }
+                        break;
+                        case "is blank":
+                            if (context == "") {
+                                cond = true;
+                            }
+                        break;
+                        case "is not blank":
+                            if (context != "") {
+                                cond = true;
+                            }
+                        break;
+                        case "does not contains":
+                            if (context.indexOf(val1) < 0) {
+                                cond = true;
+                            }
+                        break;
+                        case "equals":
+                            if (context == val1) {
+                                cond = true;
+                            }
+                        break;
+                        case "does not equal":
+                            if (context != val1) {
+                                cond = true;
+                            }
+                        break;
+                    }
+                }
+
+                if (val.sum == "or") {
+                    is_redirect = is_redirect | cond;  
+                } else {
+                    is_redirect = is_redirect & cond;
+                }
+                    
+            }
+
+            if (is_redirect) {
+                return RULES[i].redirect;
+            }
+
+            prev_result += RULES[i].count;
+        }
+
+        return "";
+    }
 
     nextQuestion() {
         const q = this.props.questions[this.props.activate - 1];
@@ -273,101 +384,12 @@ class PreviewPanel extends Component {
                     }
                 }
                 
-                if (RESULT) {
-                    let conditions = RESULT.conditions;
-                    let sum = this.onCalculate();
-                    let is_redirect = true;
-
-                    conditions.map((val) => {
-                        let cond = false;
-                        if (val.target == "Score") {
-                            
-                            cond = false;
-                            const _min = parseInt(val.val[0]);
-                            switch (val.condition) {
-                                case "=":
-                                    if (sum == _min) {
-                                        cond = true;
-                                    }
-                                    break;
-                                case "between":
-                                    if (sum >= _min && sum <= parseInt(val.val[1])) {
-                                        cond = true;
-                                    }
-                                    break;
-                                case ">":
-                                    if (sum > _min) {
-                                       cond = true;
-                                    }
-                                    break;
-                                case "<":
-                                    if (sum < _min) {
-                                        cond = true;
-                                    }
-                                    break;
-                            }
-
-
-                        } else {
-                            //window.location.replace(val.redirect);
-                            
-                            const val1 = val.val[0];
-                            const question = this.props.questions[val.target - 1];
-                            let context = "";
-                            if (question.type == "MC") {
-                                question.answers.map((val) => {
-                                    if (val.checked) {
-                                        context += val.title + "\n";
-                                    }
-                                });
-                            } else {
-                                context = question.text;
-                            }
-
-                            switch (val.condition) {
-                                case "contains":
-                                    if (context.indexOf(val1) >= 0) {
-                                        cond = true;
-                                    }
-                                break;
-                                case "is blank":
-                                    if (context == "") {
-                                        cond = true;
-                                    }
-                                break;
-                                case "is not blank":
-                                    if (context != "") {
-                                        cond = true;
-                                    }
-                                break;
-                                case "does not contains":
-                                    if (context.indexOf(val1) < 0) {
-                                        cond = true;
-                                    }
-                                break;
-                                case "equals":
-                                    if (context == val1) {
-                                        cond = true;
-                                    }
-                                break;
-                                case "does not equal":
-                                    if (context != val1) {
-                                        cond = true;
-                                    }
-                                break;
-                            }
-                        }
-
-                        if (val.sum == "or") {
-                            is_redirect = is_redirect | cond;  
-                        } else {
-                            is_redirect = is_redirect & cond;
-                        }
-                    });
-
-                    if (is_redirect && conditions[0].redirect) {
-                        window.location.replace(conditions[0].redirect);
-                    }
+                if (RESULT && RULES) {
+                    
+                    let redirect_url = this.calculateResult();
+                    if (redirect_url)
+                        window.location.replace(redirect_url);
+                    
                 }
             }
             else {

@@ -241,6 +241,12 @@ class MQA_Plugin {
 	}
 
 	public function mqz_admin_enque_scripts() {
+		global $pagenow;
+
+		if ($pagenow == "admin.php" && isset($_GET["page"]) && $_GET["page"] == "innovere-survey/innovere.php") {
+			wp_enqueue_script( 'jquery-ui-tooltip' );
+
+		}
 
 		wp_enqueue_style( 'admin-quiz.css', MQA_PLUGIN_URL . 'admin/css/mqz-admin.css', null, '1.0');
 		wp_enqueue_script( 'micromodal.min.js', MQA_PLUGIN_URL . 'admin/js/micromodal.min.js', array( 'jquery'), '1.0', true );
@@ -411,11 +417,8 @@ class MQA_Plugin {
 			add_submenu_page( NULL, __( 'Settings', 'mqz' ), __( 'Settings', 'mqz' ), 'moderate_comments', 'quiz_manage_page' );			
 			add_submenu_page( __FILE__, __( 'Settings', 'mqz' ), __( 'Settings', 'mqz' ), 'manage_options', 'mqz_options', 'mqz_settings_page'  );
 
-			add_submenu_page( __FILE__, __( 'Export / Import', 'mqz' ), __( 'Export / Import', 'mqz' ), 'manage_options', 'mqz_import', 'mqz_import_page'  );
+			// add_submenu_page( __FILE__, __( 'Export / Import', 'mqz' ), __( 'Export / Import', 'mqz' ), 'manage_options', 'mqz_import', 'mqz_import_page'  );
 
-			// global $menu;
-			// var_dump ($menu);
-			// exit;
 		}
 	}
 

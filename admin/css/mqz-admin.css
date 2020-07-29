@@ -203,3 +203,21 @@
   .mqz-import-section .mqz-row .mqz-form {
     padding: 15px 0;
   }
+
+  .ui-tooltip {
+  padding: 0 10px;
+  position: absolute;
+  z-index: 9999;
+  max-width: 300px;
+  color: white;
+  border-radius: 5px;
+  text-transform: uppercase;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+  background: #000;
+  z-index: 999;
+
+}
+
+body .ui-tooltip {
+  border-width: 1px;  
+}

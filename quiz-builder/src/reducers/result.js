@@ -3,7 +3,7 @@ import {CHANGE_RESULT, READ_RESULT} from "../constants/result";
 export default function reducer(state = {
     conditions: [
         {
-            "sum": "or",
+            "sum": "and",
             target: "Score",
             condition: "=",
             val: [

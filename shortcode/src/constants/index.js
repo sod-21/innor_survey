@@ -3,6 +3,8 @@ export const CHANGE_QUESTION  = "CHANGE_QUESTION";
 export const SUBMITTED_QUESTION = "SUBMITTED_QUESTION";
 
 export const RESULT = window.suvery_data.result;
+export const RULES = window.suvery_data.rule.rule;
+
 export const replace_recall = (e, q) => {
     var div = document.createElement("div");
     div.innerHTML = e;

@@ -46,11 +46,11 @@ class Quiz_Table_List extends WP_List_Table {
     public function column_Action($item) {
 
         return sprintf("<div class='quiz-actions-wrap'><form method='post' action=''>
-            <a href='%s' class='btn-action'>%s</a>
-            <a href='%s' target='_blank' data-view='%s' class='btn-action'>%s</a>
-            <button type='submit' name='quiz-duplicate' value='%s' class='btn-action btn-duplicate'>%s</button>
-            <a href='javascript:void(0);'  class='btn-action btn-copy' data-id='%s'>%s</a>
-            <button type='submit' name='quiz-delete' value='%s' class='btn-action' >%s</button> </form></div>",
+            <a href='%s' class='btn-action' title='Edit'>%s</a>
+            <a href='%s' target='_blank' data-view='%s' class='btn-action' title='View'>%s</a>
+            <button type='submit' name='quiz-duplicate' value='%s' class='btn-action btn-duplicate' title='Duplicate'>%s</button>
+            <a href='javascript:void(0);'  class='btn-action btn-copy' data-id='%s' title='Get Shortcode'>%s</a>
+            <button type='submit' name='quiz-delete' value='%s' class='btn-action' title='Delete'>%s</button> </form></div>",
             admin_url( 'post-new.php?post_type=quiz&id=' .$item['ID'] ),
             // get_post_field('post_name', $item["ID"]), $item["ID"],
             '<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">

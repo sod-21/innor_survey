@@ -16,13 +16,14 @@ class ProgressBar extends Component {
 
         const progress = this.props.activate / this.props.total * 100;
 
-        let label = is_percent ? 
+        let label = 
         (
             <span>{progress.toFixed()}%</span>
-        ):
-        (
-            <span>{this.props.activate} / {this.props.total}</span>
-        );
+        )
+
+        if (!is_percent) {
+            return (<Fragment></Fragment>);
+        }
 
         return (
             <div class="qs-progress-bar-wrapper">

@@ -125,12 +125,9 @@ function mailite_field( WP_REST_Request $request) {
 
 function mqz_get_quiz( WP_REST_Request $request) {
 	
-	// $current_user = wp_get_current_user();
-	// if ( 0 !== $current_user ) {
-		$quiz = MQZ_QUIZ::load_quiz( $request['id'] );
-		
-		return $quiz;
-	// }
+	$quiz = MQZ_QUIZ::load_quiz( $request['id'] );
+	
+	return $quiz;
 	
 	return array(
 		'status' => 'error',
@@ -171,16 +168,17 @@ function mqz_save_quiz( WP_REST_Request $request) {
 	);
 }
 
-// function my_customize_rest_cors() {
-// 	remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
-// 	add_filter( 'rest_pre_serve_request', function( $value ) {
-// 		header( 'Access-Control-Allow-Origin: *' );
-// 		header( 'Access-Control-Allow-Methods: GET' );
-// 		header( 'Access-Control-Allow-Credentials: true' );
-// 		header( 'Access-Control-Expose-Headers: Link', false );
+function my_customize_rest_cors() {
+	remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
 
-// 		return $value;
-// 	} );
-// }
+	add_filter( 'rest_pre_serve_request', function( $value ) {
+		header( 'Access-Control-Allow-Origin: *' );
+		header( 'Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE' );
+		header( 'Access-Control-Allow-Credentials: true' );
+		header( 'Access-Control-Expose-Headers: Link', false );
 
-// add_action( 'rest_api_init', 'my_customize_rest_cors', 15 );
+		return $value;
+	} );
+}
+
+add_action( 'rest_api_init', 'my_customize_rest_cors', 15 );

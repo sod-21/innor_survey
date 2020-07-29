@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 */
 class MQZ_Helpers {
 
-	public static $version = "1.43";
+	public static $version = "1.45";
 	
 	public function __construct() {
 		

@@ -72,7 +72,9 @@ export default function reducer(state = {
             nstate[index].count ++;
         else if(change == "-")
             nstate[index].count --;
-
+        else if (change == "reset")
+            nstate[index].count = action.payload.count;
+        
         return { rule: nstate};
     }
 

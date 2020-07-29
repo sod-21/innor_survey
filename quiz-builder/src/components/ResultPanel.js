@@ -6,7 +6,17 @@ import RTooltip from "./Content/RTooltip";
 class ResultPanel extends Component {
 
     constructor(props) {
-        super(props);    
+        super(props);
+
+        if (this.props.rule.rule.length == 2 && this.props.rule.rule[0].count == 1) {
+           if (this.props.result.conditions.length > 1) {
+                this.props.changeRule({
+                    change: "reset",
+                    index: 0,
+                    count: this.props.result.conditions.length
+                });
+           }
+        }
     }
 
     onAdd(index) {
@@ -137,7 +147,7 @@ class ResultPanel extends Component {
                             }
                             
                             const rule_index = rule_pos;
-                            
+
                             return (
                             <Fragment>
                             {rule_row}
